@@ -11,6 +11,12 @@
   align-self: stretch;
   flex-grow: 0;
 }
+.section-tile.inactive {
+  background-color: lightgray; 
+}
+
+
+
 .firsthalf {
   display: flex;
   justify-content: space-between;
@@ -158,4 +164,8 @@ label {
   flex: none;
   order: 0;
   flex-grow: 0;
+}
+.btn-content {
+  display: flex;
+  justify-content: center;
 }

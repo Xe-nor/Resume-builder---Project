@@ -11,6 +11,7 @@ import Switch from "react-switch";
 import "react-tippy/dist/tippy.css"; // Import the react-tippy CSS
 import "./builder.css";
 import { Tooltip } from "react-tippy";
+import { Puff } from "react-loader-spinner";
 
 const data = [
   {
@@ -89,12 +90,6 @@ const reorder = (list, startIndex, endIndex) => {
 
 const grid = 8;
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-  userSelect: "none",
-  background: isDragging ? "lightgreen" : "transparent",
-  ...draggableStyle,
-});
-
 const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? "lightblue" : "transparent",
   padding: grid,
@@ -102,6 +97,21 @@ const getListStyle = (isDraggingOver) => ({
 
 const App = () => {
   const [items, setItems] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Rest of the code...
+
+  const getItemStyle = (isDragging, draggableStyle, index) => ({
+    userSelect: "none",
+    background:
+      activeIndex !== null && activeIndex !== index
+        ? "lightgray" // Color for inactive tiles
+        : isDragging
+        ? "lightblue" // Color for dragging tile
+        : "transparent", // Default color for other tiles
+    ...draggableStyle,
+  });
 
   useEffect(() => {
     const storedItems = localStorage.getItem("appItems");
@@ -139,19 +149,27 @@ const App = () => {
   };
 
   const handleEditClick = (index) => {
+    setActiveIndex(index);
     const updatedSections = [...items];
-    updatedSections[index].isEditing = true;
+    updatedSections.forEach((section, i) => {
+      section.isEditing = i === index;
+    });
     setItems(updatedSections);
   };
 
   const handleSaveClick = (index) => {
+    setActiveIndex(null);
     const updatedSections = [...items];
     updatedSections[index].isEditing = false;
     setItems(updatedSections);
   };
-
   const handleSaveAndNext = () => {
-    localStorage.setItem("appItems", JSON.stringify(items));
+    setIsLoading(true); // Show loading animation
+
+    setTimeout(() => {
+      localStorage.setItem("appItems", JSON.stringify(items));
+      setIsLoading(false); // Hide loading animation
+    }, 2000); // Simulating a delay of 2 seconds for demonstration purposes
   };
 
   return (
@@ -179,7 +197,8 @@ const App = () => {
                       {...provided.draggableProps}
                       style={getItemStyle(
                         snapshot.isDragging,
-                        provided.draggableProps.style
+                        provided.draggableProps.style,
+                        index
                       )}
                     >
                       <div className="firsthalf">
@@ -278,7 +297,25 @@ const App = () => {
 
       <div className="btn">
         <button className="btn-btn" onClick={handleSaveAndNext}>
-          Save and Next
+          {" "}
+          <div className="btn-content">
+            {" "}
+            {isLoading ? ( // Render loading animation if isLoading is true
+              <Puff
+                className="loader"
+                height="30"
+                width="30"
+                // radius={1}
+                color="#ffffff"
+                ariaLabel="puff-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            ) : (
+              "Save and Next"
+            )}
+          </div>
         </button>
       </div>
     </div>
