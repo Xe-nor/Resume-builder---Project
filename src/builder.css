@@ -12,10 +12,8 @@
   flex-grow: 0;
 }
 .section-tile.inactive {
-  background-color: lightgray; 
+  background-color: lightgray;
 }
-
-
 
 .firsthalf {
   display: flex;
@@ -168,4 +166,52 @@ label {
 .btn-content {
   display: flex;
   justify-content: center;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+  body {
+    padding: 0;
+  }
+  .btn-btn {
+    width: 100%;
+  }
+  .btn {
+    padding: 1em;
+  }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  body {
+    padding: 1em;
+  }
+  .btn-btn {
+    width: 100%;
+  }
+  .btn {
+    padding: 1em;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  body {
+    padding: 1em;
+  }
+  .btn-btn {
+    width: 100%;
+  }
+  .btn {
+    padding: 1em;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+  body {
+    padding: 3em;
+  }
+  .btn-btn {
+    width: 50%;
+  }
+  .btn {
+    padding: 1em;
+  }
 }
