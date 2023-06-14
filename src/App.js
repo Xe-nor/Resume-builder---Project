@@ -91,7 +91,7 @@ const reorder = (list, startIndex, endIndex) => {
 const grid = 8;
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "transparent",
+  background: isDraggingOver ? "lightgray" : "transparent",
   padding: grid,
 });
 
@@ -108,7 +108,7 @@ const App = () => {
       activeIndex !== null && activeIndex !== index
         ? "lightgray" // Color for inactive tiles
         : isDragging
-        ? "lightblue" // Color for dragging tile
+        ? "#ffffff" // Color for dragging tile
         : "transparent", // Default color for other tiles
     ...draggableStyle,
   });
